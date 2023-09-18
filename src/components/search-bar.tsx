@@ -58,7 +58,7 @@ const SearchBar: React.FC = () => {
           />
           {searchInput.length > 0 && (
             <div className="absolute inset-x-0 top-[110%] h-fit max-h-[60vh] w-full overflow-hidden overflow-y-scroll rounded-md border-2 border-zinc-800 shadow backdrop-blur-sm bg-zinc-950/75">
-              {!isFetching && (
+              {isFetching && (
                 <div className="w-full h-20 flex items-center justify-center text-neutral-50 gap-4">
                   <Loader2 className="animate-spin" />
                   <span className="truncate">
@@ -66,7 +66,7 @@ const SearchBar: React.FC = () => {
                   </span>
                 </div>
               )}
-              {!isFetched &&
+              {isFetched &&
                 !isFetching &&
                 (queryResults?.length ?? 0) === 0 && (
                   <p className="inline-flex h-fit w-full items-center justify-center gap-2 p-5 text-lg text-neutral-50">
