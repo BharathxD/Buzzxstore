@@ -1,6 +1,5 @@
 import getProducts from "@/actions/getProducts";
-import { Carousel } from "@/components/carousel";
-import EmptyState from "@/components/not-found";
+import CarouselServer from "@/components/carousel-server";
 import ProductSkeleton from "@/components/ui/product-skeleton";
 import { Suspense } from "react";
 
@@ -11,11 +10,9 @@ interface ProductsProps {
 }
 
 const Products = async ({ params: { categoryId } }: ProductsProps) => {
-  const products = await getProducts({ categoryId });
-  if (!products || products.length === 0) return <EmptyState showReset />;
   return (
     <Suspense fallback={<ProductSkeleton />}>
-      <Carousel products={products} />
+      <CarouselServer productPromise={() => getProducts({ categoryId })} />
     </Suspense>
   );
 };

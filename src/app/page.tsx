@@ -2,7 +2,10 @@
 
 import getAllProducts from "@/actions/getAllProducts";
 import { Carousel } from "@/components/carousel";
+import CarouselServer from "@/components/carousel-server";
 import EmptyState from "@/components/not-found";
+import ProductSkeleton from "@/components/ui/product-skeleton";
+import { Suspense } from "react";
 
 interface HomeProps {
   searchParams: {
@@ -11,8 +14,9 @@ interface HomeProps {
 }
 
 export default async function Home({ searchParams: { category } }: HomeProps) {
-  const products = await getAllProducts();
-  if (!products || products.length === 0)
-    return <EmptyState title="No products found" />;
-  return <Carousel products={products} />;
+  return (
+    <Suspense fallback={<ProductSkeleton />}>
+      <CarouselServer productPromise={() => getAllProducts()} />
+    </Suspense>
+  );
 }
