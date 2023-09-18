@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { Prisma } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 import { string, ZodError } from "zod";
 
@@ -19,6 +18,7 @@ const getProducts = async (req: NextRequest): Promise<NextResponse> => {
             where: {
                 name: {
                     contains: queryParam,
+                    mode: "insensitive"
                 },
             },
         })
@@ -35,7 +35,7 @@ const getProducts = async (req: NextRequest): Promise<NextResponse> => {
         return NextResponse.json(
             {
                 message:
-                    "Something went wrong. The users cannot be retrieved at the moment.",
+                    "Something went wrong. The products cannot be retrieved at the moment.",
             },
             { status: StatusCodes.INTERNAL_SERVER_ERROR }
         );
