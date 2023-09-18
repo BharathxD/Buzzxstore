@@ -39,6 +39,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.198"
+    "@types/lodash": "^4.14.198",
+    "prisma": "^5.3.1"
   }
 }
