@@ -6,36 +6,66 @@ import "./globals.css";
 import RtkProvider from "@/providers/rtk-provider";
 import SecondaryNav from "@/components/secondary-nav";
 import getCategories from "@/actions/getCategories";
+import { Metadata } from "next";
+import siteConfig from "@/config/site";
 
-const { TWITTER_CREATOR, TWITTER_SITE, SITE_NAME } = process.env;
-const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : "http://localhost:3000";
-const twitterCreator = TWITTER_CREATOR
-  ? ensureStartsWith(TWITTER_CREATOR, "@")
-  : undefined;
-const twitterSite = TWITTER_SITE
-  ? ensureStartsWith(TWITTER_SITE, "https://")
-  : undefined;
-
-export const metadata = {
-  metadataBase: new URL(baseUrl),
+/**
+ * Metadata object for the Next.js page.
+ * @type {Metadata}
+ * @see {@link https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function}
+ */
+export const metadata: Metadata = {
   title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`,
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
   },
-  robots: {
-    follow: true,
-    index: true,
+  // Icon URLs for various platforms
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon-32x32.png",
   },
-  ...(twitterCreator &&
-    twitterSite && {
-      twitter: {
-        card: "summary_large_image",
-        creator: twitterCreator,
-        site: twitterSite,
-      },
-    }),
+  description: siteConfig.description,
+  // Keywords relevant to the website's content
+  keywords: [
+    "Online Shopping",
+    "Affiliate Store",
+    "Retailer Products",
+    "One-Stop Shopping",
+    "Online Retailers",
+    "Shopping Destination",
+    "Product Variety",
+    "Top Brands",
+    "Convenient Shopping",
+    "Buzzxstore",
+  ],
+  // Authors and creator information
+  authors: [
+    {
+      name: "Buzzxstore",
+      url: "https://instagram.com/buzzx.store?igshid=MzMyNGUyNmU2YQ==",
+    },
+  ],
+  creator: "Buzzxstore",
+  // Theme color options based on user's color scheme preference
+  themeColor: [{ media: "(prefers-color-scheme: dark)", color: "black" }],
+  // OpenGraph metadata for social media sharing
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+  },
+  // Twitter card metadata for Twitter sharing
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/images/opengraph-image.jpg`],
+    creator: "@Bharath_uwu",
+  },
 };
 
 const poppins = Poppins({
