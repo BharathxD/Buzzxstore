@@ -7,7 +7,6 @@ import { Layers, Loader2, Search } from "lucide-react";
 import { useQuery } from "react-query";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@prisma/client";
 
 const SearchBar: React.FC = () => {
@@ -33,7 +32,7 @@ const SearchBar: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild aria-label="Search">
-        <button className="relative flex items-center justify-center gap-2 md:px-5 hover:cursor-pointer bg-neutral-800 p-2 rounded-full md:rounded-md">
+        <button className="relative flex items-center justify-center gap-2 md:px-5 hover:cursor-pointer bg-neutral-800 p-2 rounded-full md:rounded-md outline outline-neutral-700">
           <p className="text-neutral-400 hidden md:block">
             Search for products
           </p>
