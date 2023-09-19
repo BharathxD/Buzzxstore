@@ -1,9 +1,7 @@
 "use server";
 
 import getAllProducts from "@/actions/getAllProducts";
-import { Carousel } from "@/components/carousel";
-import CarouselServer from "@/components/carousel-server";
-import EmptyState from "@/components/not-found";
+import ProductDisplayServer from "@/components/product-display-server";
 import ProductSkeleton from "@/components/ui/product-skeleton";
 import { Suspense } from "react";
 
@@ -16,7 +14,7 @@ interface HomeProps {
 export default async function Home({ searchParams: { category } }: HomeProps) {
   return (
     <Suspense fallback={<ProductSkeleton />}>
-      <CarouselServer productPromise={() => getAllProducts()} />
+      <ProductDisplayServer productPromise={() => getAllProducts()} />
     </Suspense>
   );
 }

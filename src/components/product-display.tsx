@@ -4,11 +4,11 @@ import Label from "./ui/label";
 import { ModifiedProducts } from "@/actions/getProducts";
 import { Product } from "@prisma/client";
 
-interface CarouselProps {
+interface ProductDisplayProps {
   products: ModifiedProducts | Product[];
 }
 
-export async function Carousel({ products }: CarouselProps) {
+export async function ProductDisplay({ products }: ProductDisplayProps) {
   if (!products?.length) return null;
   return (
     <div className="w-full flex items-center justify-center">
@@ -30,10 +30,7 @@ export async function Carousel({ products }: CarouselProps) {
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
               />
-              <Label
-                title={product.name}
-                amount={product.price}
-              />
+              <Label title={product.name} amount={product.price} />
             </Link>
           </li>
         ))}

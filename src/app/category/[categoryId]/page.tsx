@@ -1,20 +1,22 @@
 import getProducts from "@/actions/getProducts";
-import CarouselServer from "@/components/carousel-server";
+import ProductDisplayServer from "@/components/product-display-server";
 import ProductSkeleton from "@/components/ui/product-skeleton";
 import { Suspense } from "react";
 
-interface ProductsProps {
+interface CategoryProps {
   params: {
     categoryId: string;
   };
 }
 
-const Products = async ({ params: { categoryId } }: ProductsProps) => {
+const Category = async ({ params: { categoryId } }: CategoryProps) => {
   return (
     <Suspense fallback={<ProductSkeleton />}>
-      <CarouselServer productPromise={() => getProducts({ categoryId })} />
+      <ProductDisplayServer
+        productPromise={() => getProducts({ categoryId })}
+      />
     </Suspense>
   );
 };
 
-export default Products;
+export default Category;
