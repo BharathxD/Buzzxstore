@@ -34,7 +34,7 @@ const ProductServer = async ({ productPromise }: ProductServerProps) => {
         </div>
       </div>
       <ProductCarousel
-      // @eslint-ignore
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         categoryId={product.categoryId!}
         currentProductId={product.id}
       />
