@@ -38,7 +38,7 @@ const generateMetadata = async ({
   const ogUrl = new URL(`${siteUrl}/api/og`);
   ogUrl.searchParams.set("title", product.name);
 
-  return {
+  const metadata = {
     title: productName,
     description: productDescription,
     authors: {
@@ -51,8 +51,8 @@ const generateMetadata = async ({
       images: [
         {
           url: ogUrl.toString(),
-          width: 1200,
-          height: 630,
+          width: 800,
+          height: 400,
           alt: productName,
         },
       ],
@@ -64,6 +64,8 @@ const generateMetadata = async ({
       images: [ogUrl.toString()],
     },
   };
+
+  return metadata;
 };
 
 const Products = async ({ params: { productId } }: ProductsProps) => {

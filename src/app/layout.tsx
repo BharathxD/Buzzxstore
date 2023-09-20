@@ -8,6 +8,7 @@ import SecondaryNav from "@/components/secondary-nav";
 import getCategories from "@/actions/getCategories";
 import { Metadata } from "next";
 import siteConfig from "@/config/site";
+import Footer from "@/components/footer";
 
 /**
  * Metadata object for the Next.js page.
@@ -94,6 +95,7 @@ export default async function RootLayout({
               {children}
             </main>
           </Suspense>
+          <Footer />
         </RtkProvider>
       </body>
     </html>

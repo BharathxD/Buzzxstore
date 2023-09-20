@@ -4,7 +4,6 @@ import Link from "next/link";
 import SearchBar from "./search-bar";
 import Image from "next/image";
 import { FaInstagram } from "react-icons/fa";
-import { Button } from "./ui/button";
 
 const Navbar = () => {
   return (

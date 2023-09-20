@@ -32,7 +32,7 @@ const ProductCarousel = async ({
       <h2 className="mb-4 text-2xl font-bold text-neutral-300">
         Related Products
       </h2>
-      <ul className="flex animate-carousel gap-4 no-scrollbar overflow-x-auto ">
+      <ul className="flex gap-4 no-scrollbar overflow-x-auto ">
         {products.map((product, i) => (
           <li
             key={`${product.id}${i}`}
