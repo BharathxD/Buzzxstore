@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import axios, { type AxiosResponse } from "axios";
 import { debounce } from "lodash";
-import { Layers, Loader2, Search } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import { useQuery } from "react-query";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -80,7 +80,6 @@ const SearchBar: React.FC = () => {
                         className="inline-flex h-fit w-full items-center gap-2 p-5 text-lg hover:bg-zinc-800 text-neutral-50 hover:text-zinc-300"
                         href={`/product/${product.id}`}
                       >
-                        <Layers className="mr-2 h-8 w-8" />
                         <p>{product.name}</p>
                       </a>
                     </li>
