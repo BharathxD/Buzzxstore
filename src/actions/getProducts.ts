@@ -1,9 +1,9 @@
 "use server";
 
 import database from "@/lib/database";
-import { Product, Provider } from "@prisma/client";
+import { Category, Product, Provider } from "@prisma/client";
 
-export type ModifiedProducts = ({ providers: Provider[] } & Product)[];
+export type ModifiedProducts = ({ providers: Provider[], Category: Category | null } & Product)[];
 
 async function getProducts({ categoryId }: { categoryId: string }): Promise<ModifiedProducts | null> {
     try {
@@ -14,7 +14,8 @@ async function getProducts({ categoryId }: { categoryId: string }): Promise<Modi
                 }
             },
             include: {
-                providers: true
+                providers: true,
+                Category: true
             }
         });
         return products ?? null;

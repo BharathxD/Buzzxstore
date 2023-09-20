@@ -14,7 +14,10 @@ interface HomeProps {
 export default async function Home({ searchParams: { category } }: HomeProps) {
   return (
     <Suspense fallback={<ProductSkeleton />}>
-      <ProductDisplayServer productPromise={() => getAllProducts()} />
+      <ProductDisplayServer
+        productPromise={() => getAllProducts()}
+        isHomepage
+      />
     </Suspense>
   );
 }
