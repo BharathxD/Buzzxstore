@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <header>
       <div
-        className={`fixed inset-x-0 max-h-[10vh] top-0 z-50 bg-neutral-900 duration-200 border-b border-b-neutral-700`}
+        className={`flex flex-row items-center justify-center fixed inset-x-0 max-h-[10vh] top-0 z-50 bg-neutral-900 duration-200 border-b border-b-neutral-700`}
       >
         <div className="container flex flex-row-reverse items-center justify-between p-6 mx-auto">
           <div className="inline-flex items-center justify-center gap-3">
