@@ -17,9 +17,9 @@ import type { infer as zodInfer } from "zod";
  * It specifies the expected shape of the incoming data for Open Graph images.
  */
 const ogImageSchema = object({
-    title: string({ required_error: "Title is required for og:image" }),
-    author: string().optional(),
-    description: string().optional(),
+  title: string({ required_error: "Title is required for og:image" }),
+  author: string().optional(),
+  description: string().optional(),
 });
 
 /**

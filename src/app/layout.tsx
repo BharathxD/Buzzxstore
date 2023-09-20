@@ -1,14 +1,16 @@
-import { ensureStartsWith } from "@/lib/utils";
-import Navbar from "@/components/navbar";
+import { Suspense, type ReactNode } from "react";
 import { Poppins } from "next/font/google";
-import { ReactNode, Suspense } from "react";
+
+import Navbar from "@/components/navbar";
+
 import "./globals.css";
+
+import { type Metadata } from "next";
+
 import RtkProvider from "@/providers/rtk-provider";
-import SecondaryNav from "@/components/secondary-nav";
-import getCategories from "@/actions/getCategories";
-import { Metadata } from "next";
 import siteConfig from "@/config/site";
 import Footer from "@/components/footer";
+import SecondaryNav from "@/components/secondary-nav";
 
 /**
  * Metadata object for the Next.js page.
@@ -83,15 +85,14 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const categories = await getCategories();
   return (
     <html lang="en" className={poppins.className}>
-      <body className="text-black selection:bg-teal-300 bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white ">
+      <body className="bg-neutral-900 text-black selection:bg-teal-300 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white ">
         <RtkProvider>
           <Navbar />
           <SecondaryNav />
           <Suspense>
-            <main className="flex flex-col items-center justify-between mt-[20vh] mb-10 px-5 md:px-20">
+            <main className="mb-10 mt-[20vh] flex flex-col items-center justify-between px-5 md:px-20">
               {children}
             </main>
           </Suspense>

@@ -3,8 +3,8 @@ import "server-only";
 import { PrismaClient } from "@prisma/client";
 
 declare global {
-    // eslint-disable-next-line no-var
-    var cachedPrisma: PrismaClient;
+  // eslint-disable-next-line no-var
+  var cachedPrisma: PrismaClient;
 }
 
 /**
@@ -16,9 +16,9 @@ declare global {
  * stored in `global.cachedPrisma`. finally returns that instance.
  */
 const getPrismaClient = () => {
-    if (process.env.NODE_ENV === "production") return new PrismaClient();
-    if (!global.cachedPrisma) global.cachedPrisma = new PrismaClient();
-    return global.cachedPrisma;
+  if (process.env.NODE_ENV === "production") return new PrismaClient();
+  if (!global.cachedPrisma) global.cachedPrisma = new PrismaClient();
+  return global.cachedPrisma;
 };
 
 /**

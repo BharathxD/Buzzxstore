@@ -1,17 +1,12 @@
 "use server";
 
-import getAllProducts from "@/actions/getAllProducts";
-import ProductDisplayServer from "@/components/product-display-server";
-import ProductSkeleton from "@/components/ui/product-skeleton";
 import { Suspense } from "react";
+import getAllProducts from "@/actions/getAllProducts";
 
-interface HomeProps {
-  searchParams: {
-    category: string;
-  };
-}
+import ProductSkeleton from "@/components/ui/product-skeleton";
+import ProductDisplayServer from "@/components/product-display-server";
 
-export default async function Home({ searchParams: { category } }: HomeProps) {
+const Home = () => {
   return (
     <Suspense fallback={<ProductSkeleton />}>
       <ProductDisplayServer
@@ -20,4 +15,6 @@ export default async function Home({ searchParams: { category } }: HomeProps) {
       />
     </Suspense>
   );
-}
+};
+
+export default Home;

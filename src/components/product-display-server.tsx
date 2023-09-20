@@ -1,7 +1,7 @@
-import { ModifiedProducts } from "@/actions/getAllProducts";
+import { type ModifiedProducts } from "@/actions/getAllProducts";
+
 import EmptyState from "./not-found";
-import { ProductDisplay } from "./product-display";
-import { Product, Provider } from "@prisma/client";
+import ProductDisplay from "./product-display";
 
 interface ProductDisplayServerProps {
   productPromise: () => Promise<ModifiedProducts | null>;

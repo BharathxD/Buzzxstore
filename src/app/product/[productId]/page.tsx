@@ -1,9 +1,10 @@
-import getProduct from "@/actions/getProduct";
-import ProductServer from "@/components/product-server";
-import ProductPageSkeleton from "@/components/ui/ProductPageSkeleton";
-import siteConfig from "@/config/site";
-import type { Metadata } from "next";
 import { Suspense } from "react";
+import type { Metadata } from "next";
+import getProduct from "@/actions/getProduct";
+
+import siteConfig from "@/config/site";
+import ProductPageSkeleton from "@/components/ui/ProductPageSkeleton";
+import ProductServer from "@/components/product-server";
 
 interface ProductsProps {
   params: {

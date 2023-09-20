@@ -1,7 +1,8 @@
 "use client";
 
+import type { FC } from "react";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+
 import Heading from "./heading";
 import { Button } from "./ui/button";
 
@@ -20,9 +21,9 @@ const EmptyState: FC<EmptyStateProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="h-[70vh] flex flex-col gap-2 justify-center items-center">
+    <div className="flex h-[70vh] flex-col items-center justify-center gap-2">
       <Heading title={title} subtitle={subtitle} center />
-      <div className="w-48 mt-4 flex items-center justify-center">
+      <div className="mt-4 flex w-48 items-center justify-center">
         {showReset && (
           <Button onClick={() => router.push("/")} variant="outline">
             {resetLabel}

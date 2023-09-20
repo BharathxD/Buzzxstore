@@ -17,9 +17,9 @@ const generateOg = (req: Request): ImageResponse => {
     const parsedValues = ogImageSchema.parse(
       Object.fromEntries(url.searchParams)
     ) as OgImageParams;
-    const { title, description } = ogImageSchema.parse(parsedValues);
+    const { title } = ogImageSchema.parse(parsedValues);
 
-    const truncateString = (str: string, maxLength: number = 100) => {
+    const truncateString = (str: string, maxLength = 100) => {
       if (str.length > maxLength)
         return str.substring(0, maxLength - 3) + "...";
       return str;

@@ -1,13 +1,13 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { type Product } from "@prisma/client";
 import axios, { type AxiosResponse } from "axios";
 import { debounce } from "lodash";
 import { Loader2, Search } from "lucide-react";
 import { useQuery } from "react-query";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Product } from "@prisma/client";
 
 const SearchBar: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -32,15 +32,15 @@ const SearchBar: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild aria-label="Search">
-        <button className="relative flex items-center justify-center gap-2 md:px-5 hover:cursor-pointer bg-neutral-800 p-2 rounded-full md:rounded-md outline outline-neutral-700">
-          <p className="text-neutral-400 hidden md:block">
+        <button className="relative flex items-center justify-center gap-2 rounded-full bg-neutral-800 p-2 outline outline-neutral-700 hover:cursor-pointer md:rounded-md md:px-5">
+          <p className="hidden text-neutral-400 md:block">
             Search for products
           </p>
           <Search className="text-neutral-50" />
         </button>
       </DialogTrigger>
       <DialogContent
-        className="top-[7.5%] w-[90%] rounded-md border-2 bg-neutral-900 border-zinc-800 md:top-[25%]"
+        className="top-[7.5%] w-[90%] rounded-md border-2 border-zinc-800 bg-neutral-900 md:top-[25%]"
         showClose={false}
       >
         <div className="flex h-full w-full flex-col items-center gap-2 pl-2">
@@ -56,9 +56,9 @@ const SearchBar: React.FC = () => {
             placeholder="Search products..."
           />
           {searchInput.length > 0 && (
-            <div className="absolute inset-x-0 top-[110%] h-fit max-h-[60vh] w-full overflow-hidden overflow-y-scroll rounded-md border-2 border-zinc-800 shadow backdrop-blur-sm bg-zinc-950/75">
+            <div className="absolute inset-x-0 top-[110%] h-fit max-h-[60vh] w-full overflow-hidden overflow-y-scroll rounded-md border-2 border-zinc-800 bg-zinc-950/75 shadow backdrop-blur-sm">
               {isFetching && (
-                <div className="w-full h-20 flex items-center justify-center text-neutral-50 gap-4">
+                <div className="flex h-20 w-full items-center justify-center gap-4 text-neutral-50">
                   <Loader2 className="animate-spin" />
                   <span className="truncate">
                     Fetching the best products for you...
@@ -77,7 +77,7 @@ const SearchBar: React.FC = () => {
                   {queryResults?.map((product) => (
                     <li key={product.id}>
                       <a
-                        className="inline-flex h-fit w-full items-center gap-2 p-5 text-lg hover:bg-zinc-800 text-neutral-50 hover:text-zinc-300"
+                        className="inline-flex h-fit w-full items-center gap-2 p-5 text-lg text-neutral-50 hover:bg-zinc-800 hover:text-zinc-300"
                         href={`/product/${product.id}`}
                       >
                         <p>{product.name}</p>

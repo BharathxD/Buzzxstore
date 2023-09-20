@@ -1,9 +1,9 @@
 "use server";
 
-import OtherCategories from "./other-categories";
 import getCategories from "@/actions/getCategories";
-import Link from "next/link";
+
 import NavItem from "./nav-item";
+import OtherCategories from "./other-categories";
 
 const SecondaryNav = async () => {
   const categories = await getCategories();
@@ -12,8 +12,8 @@ const SecondaryNav = async () => {
   const firstCategorySplit = categories.slice(0, splitIndex);
   const secondCategorySplit = categories.slice(splitIndex);
   return (
-    <div className="no-scrollbar fixed z-50 bg-neutral-900/90 backdrop-blur-md h-[7vh] inset-x-0 min-h-20 p-2 flex flex-row top-[10vh] border-b border-b-neutral-700 overflow-x-scroll w-full">
-      <div className="flex flex-row md:justify-center items-center gap-4 w-full px-4">
+    <div className="no-scrollbar fixed inset-x-0 top-[10vh] z-50 flex h-[7vh] w-full flex-row overflow-x-scroll border-b border-b-neutral-700 bg-neutral-900/90 p-2 backdrop-blur-md">
+      <div className="flex w-full flex-row items-center gap-4 px-4 md:justify-center">
         {firstCategorySplit?.map(({ id, name }) => (
           <NavItem id={id} name={name} />
         ))}

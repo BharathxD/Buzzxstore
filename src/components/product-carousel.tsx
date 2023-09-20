@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { type ModifiedProducts } from "@/actions/getAllProducts";
 import getProducts from "@/actions/getProducts";
-import GridTileImageV2 from "./grid-tile-image-v2";
+
 import { cn } from "@/lib/utils";
-import { ModifiedProducts } from "@/actions/getAllProducts";
+
+import GridTileImageV2 from "./grid-tile-image-v2";
 
 interface ProductCarouselProps {
   categoryId: string;
@@ -26,13 +28,13 @@ const ProductCarousel = async ({
   return (
     <div
       className={cn(
-        "max-w-[92vw] rounded-xl border border-neutral-800 bg-black mt-4 p-4"
+        "mt-4 max-w-[92vw] rounded-xl border border-neutral-800 bg-black p-4"
       )}
     >
       <h2 className="mb-4 text-2xl font-bold text-neutral-300">
         Related Products
       </h2>
-      <ul className="flex gap-4 no-scrollbar overflow-x-auto ">
+      <ul className="no-scrollbar flex gap-4 overflow-x-auto ">
         {products.map((product, i) => (
           <li
             key={`${product.id}${i}`}

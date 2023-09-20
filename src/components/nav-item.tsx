@@ -1,8 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+import { cn } from "@/lib/utils";
 
 const NavItem = ({ id, name }: { id: string; name: string }) => {
   const pathname = usePathname();
@@ -11,8 +12,9 @@ const NavItem = ({ id, name }: { id: string; name: string }) => {
     <Link
       href={`/category/${id}`}
       className={cn(
-        "duration-200 min-w-max text-zinc-400 hover:text-zinc-100 inline-flex items-center justify-center",
-        isCurrentPathActive && "py-1 px-2 bg-neutral-700 rounded-md text-zinc-100"
+        "inline-flex min-w-max items-center justify-center text-zinc-400 duration-200 hover:text-zinc-100",
+        isCurrentPathActive &&
+          "rounded-md bg-neutral-700 px-2 py-1 text-zinc-100"
       )}
     >
       {name}

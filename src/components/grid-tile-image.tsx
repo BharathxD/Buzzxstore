@@ -1,6 +1,5 @@
-import clsx from "clsx";
 import Image from "next/image";
-import Label from "./ui/label";
+import clsx from "clsx";
 
 export function GridTileImage({
   isInteractive = true,
@@ -20,7 +19,7 @@ export function GridTileImage({
   return (
     <div
       className={clsx(
-        "aspect-square group flexitems-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black",
+        "flexitems-center group aspect-square justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black",
         {
           relative: label,
           "border-2 border-blue-600": active,
@@ -31,7 +30,7 @@ export function GridTileImage({
       {props.src ? (
         // eslint-disable-next-line jsx-a11y/alt-text -- `alt` is inherited from `props`, which is being enforced with TypeScript
         <Image
-          className={clsx("py-4 relative h-full w-full object-contain", {
+          className={clsx("relative h-full w-full object-contain py-4", {
             "transition duration-300 ease-in-out group-hover:scale-105":
               isInteractive,
           })}

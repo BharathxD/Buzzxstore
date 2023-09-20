@@ -1,8 +1,9 @@
-import getProducts from "@/actions/getProducts";
-import ProductDisplayServer from "@/components/product-display-server";
-import ProductSkeleton from "@/components/ui/product-skeleton";
-import { Metadata } from "next";
 import { Suspense } from "react";
+import type { Metadata } from "next";
+import getProducts from "@/actions/getProducts";
+
+import ProductSkeleton from "@/components/ui/product-skeleton";
+import ProductDisplayServer from "@/components/product-display-server";
 
 interface CategoryProps {
   params: {
