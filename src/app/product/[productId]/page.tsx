@@ -1,6 +1,8 @@
 import getProduct from "@/actions/getProduct";
 import ProductServer from "@/components/product-server";
 import ProductPageSkeleton from "@/components/ui/ProductPageSkeleton";
+import siteConfig from "@/config/site";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 interface ProductsProps {
@@ -8,6 +10,61 @@ interface ProductsProps {
     productId: string;
   };
 }
+
+const generateMetadata = async ({
+  params: { productId },
+}: ProductsProps): Promise<Metadata> => {
+  if (!productId)
+    return {
+      title: "Not Found - Product Not Found",
+      description:
+        "We apologize, but the product you are searching for could not be found.",
+    };
+
+  const product = await getProduct({ productId });
+  const siteUrl = siteConfig.url;
+
+  const productName = product?.name;
+  const productDescription = product?.description;
+
+  if (!product || !productName) {
+    return {
+      title: "Not Found - Product Not Found",
+      description:
+        "We apologize, but the product you are searching for could not be found.",
+    };
+  }
+
+  const ogUrl = new URL(`${siteUrl}/api/og`);
+  ogUrl.searchParams.set("title", product.name);
+
+  return {
+    title: productName,
+    description: productDescription,
+    authors: {
+      name: siteConfig.name,
+    },
+    openGraph: {
+      title: productName,
+      description: productDescription,
+      url: `${siteConfig.url}/product/${product.id}`,
+      images: [
+        {
+          url: ogUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: productName,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: productName,
+      description: productDescription,
+      images: [ogUrl.toString()],
+    },
+  };
+};
 
 const Products = async ({ params: { productId } }: ProductsProps) => {
   return (
@@ -17,4 +74,5 @@ const Products = async ({ params: { productId } }: ProductsProps) => {
   );
 };
 
+export { generateMetadata };
 export default Products;
