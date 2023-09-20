@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ModifiedProducts } from "@/actions/getProducts";
 import { Category, Product } from "@prisma/client";
-import { comparePrices } from "@/lib/utils";
+import { cn, comparePrices } from "@/lib/utils";
 import {
   Select,
   SelectTrigger,
@@ -15,6 +15,8 @@ import {
 import { Filter } from "lucide-react";
 import { GridTileImage } from "./grid-tile-image";
 import Label from "./ui/label";
+import { Button } from "./ui/button";
+import useOnClickOutside from "@/hooks/useClickOutside";
 
 interface ProductDisplayProps {
   products: ModifiedProducts | (Product & { Category: Category | null })[];
@@ -27,6 +29,9 @@ interface ProductDisplayProps {
  */
 export function ProductDisplay({ products, isHomepage }: ProductDisplayProps) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | "none">("none");
+  const [open, setOpen] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(selectRef, () => setOpen(false));
 
   if (!products?.length) return null;
 
@@ -55,24 +60,59 @@ export function ProductDisplay({ products, isHomepage }: ProductDisplayProps) {
             setSortOrder(value)
           }
           defaultValue="none"
+          open={open}
         >
-          <SelectTrigger className="w-min bg-neutral-800 text-neutral-300 border-neutral-700 rounded-full inline-flex gap-2">
+          <SelectTrigger
+            className="w-min bg-neutral-800 text-neutral-300 border-neutral-700 rounded-full inline-flex gap-2"
+            onClick={() => setOpen(true)}
+          >
             <Filter className="ml-auto md:ml-2" />
             <span className="hidden md:block">Filter</span>
           </SelectTrigger>
           <SelectContent
+            sideOffset={5}
             align="end"
-            className="bg-neutral-950 text-neutral-300 border-neutral-700"
+            className="bg-neutral-800 text-neutral-300 border-neutral-700"
+            ref={selectRef}
           >
-            <SelectGroup>
-              <SelectItem value="asc">Low to high</SelectItem>
-              <SelectItem value="desc">High to low</SelectItem>
-            </SelectGroup>
-            <SelectGroup>
-              <SelectItem value="none" aria-selected="true">
+            <div className="flex flex-col gap-1">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setSortOrder("asc");
+                  setOpen(false);
+                }}
+                className={cn(
+                  sortOrder === "asc" && "bg-neutral-50 text-neutral-900"
+                )}
+              >
+                Low to High
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setSortOrder("desc");
+                  setOpen(false);
+                }}
+                className={cn(
+                  sortOrder === "desc" && "bg-neutral-50 text-neutral-900"
+                )}
+              >
+                High to Low
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setSortOrder("none");
+                  setOpen(false);
+                }}
+                className={cn(
+                  sortOrder === "none" && "bg-neutral-50 text-neutral-900"
+                )}
+              >
                 None
-              </SelectItem>
-            </SelectGroup>
+              </Button>
+            </div>
           </SelectContent>
         </Select>
       </div>

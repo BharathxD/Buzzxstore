@@ -1,24 +1,39 @@
-import { useEffect, RefObject } from "react";
+"use client";
 
-function useClickOutside<T extends HTMLElement>(
-  ref: RefObject<T>,
-  callback: () => void
-) {
+import { useEffect } from "react";
+
+type Event = MouseEvent | TouchEvent;
+
+/**
+ * This is a TypeScript function that listens for clicks outside of a specified element and triggers a
+ * handler function.
+ * @param ref - RefObject<T> is a generic type that represents a reference to a DOM element. It can be
+ * used to access and manipulate the properties and methods of the referenced element.
+ * @param handler - The `handler` parameter is a callback function that will be called when a click or touch
+ * event occurs outside of the element passed as `ref`. The `event` object will be passed as an
+ * argument to this function.
+ */
+const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
+  ref: React.RefObject<T>,
+  handler: (event: Event) => void
+) => {
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        callback();
-      }
-    }
-
-    // Add event listener when the component mounts
-    document.addEventListener("click", handleClickOutside);
-
-    // Remove event listener when the component unmounts
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
+    const listener = (event: Event) => {
+      const el = ref?.current;
+      if (!el || el.contains((event?.target as Node) || null)) return;
+      // Call the handler only if the click is outside of the element passed.
+      handler(event);
     };
-  }, [ref, callback]);
-}
 
-export default useClickOutside;
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+    // Reload only if ref or handler changes
+  }, [ref, handler]);
+};
+
+export default useOnClickOutside;
