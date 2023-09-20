@@ -1,5 +1,6 @@
 import { Suspense, type ReactNode } from "react";
 import { Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 import Navbar from "@/components/navbar";
 
@@ -98,6 +99,7 @@ export default async function RootLayout({
           </Suspense>
           <Footer />
         </RtkProvider>
+        <Analytics />
       </body>
     </html>
   );
