@@ -29,7 +29,7 @@ enum SortOrder {
 }
 
 const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.None);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Ascending);
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
   useOnClickOutside(selectRef, () => setOpen(false));
@@ -121,7 +121,7 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
       </header>
       <ul className="grid w-full gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {sortedProducts.map((product, i) => (
-          <li key={`${product.id}${i}`} className="relative h-full w-full">
+          <li key={`${product.id}_${i}`} className="relative h-full w-full">
             <Link
               href={`/product/${product.id}`}
               className="relative h-full w-full"
