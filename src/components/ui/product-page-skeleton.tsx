@@ -6,14 +6,14 @@ const ProductPageSkeleton = () => {
           <div className="aspect-square h-full w-full rounded-lg bg-neutral-700 md:h-[40vw]"></div>
         </div>
         <div className="flex w-full basis-full flex-col gap-4 text-white lg:basis-3/6">
-          <div className="flex aspect-square h-[40vw] w-full flex-col items-center justify-start gap-4">
+          <div className="flex aspect-square h-[40vw] w-full flex-col items-center justify-start gap-4 md:gap-2 md:py-2">
             <div className="h-[20rem] w-full rounded-lg bg-neutral-700"></div>
             <div className="mr-auto flex h-20 w-full items-center justify-between gap-5 rounded-lg text-white">
               <div className="h-10 w-[40%] rounded-lg bg-neutral-700"></div>
               <div className="h-10 w-[40%] rounded-lg bg-neutral-700"></div>
             </div>
           </div>
-          <div className="h-[100%] w-full rounded-lg bg-neutral-700"></div>
+          <div className="h-[100%] w-full rounded-lg bg-neutral-700 md:h-full"></div>
         </div>
       </div>
     </div>
