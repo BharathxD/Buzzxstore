@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import getProduct from "@/actions/getProduct";
 
 import siteConfig from "@/config/site";
-import ProductPageSkeleton from "@/components/ui/ProductPageSkeleton";
+import ProductPageSkeleton from "@/components/ui/product-page-skeleton";
 import ProductServer from "@/components/product-server";
 
 interface ProductsProps {
