@@ -134,8 +134,8 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
                   currencyCode: "INR",
                 }}
                 src={product.image}
-                fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                fill
               />
               <Label title={product.name} amount={product.price} />
             </Link>

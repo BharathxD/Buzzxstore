@@ -58,7 +58,7 @@ const ProductDetails = ({ product }: ProductDetails) => {
                 case "flipkart":
                   return (
                     <Link
-                      key={id}
+                      key={`${id}_${i}`}
                       className="inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                       target="_blank"
                       href={link}

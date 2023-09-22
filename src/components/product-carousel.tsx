@@ -28,7 +28,7 @@ const ProductCarousel = async ({
   return (
     <div
       className={cn(
-        "mt-4 max-w-[92vw] rounded-xl border border-neutral-800 bg-black p-4"
+        "mt-4 max-w-[92vw] rounded-xl border border-neutral-800 bg-black p-8"
       )}
     >
       <h2 className="mb-4 text-2xl font-bold text-neutral-300">
@@ -52,8 +52,8 @@ const ProductCarousel = async ({
                   currencyCode: "INR",
                 }}
                 src={product.image}
-                fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                fill
               />
             </Link>
           </li>

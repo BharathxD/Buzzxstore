@@ -11,26 +11,19 @@ import { type Metadata } from "next";
 import RtkProvider from "@/providers/rtk-provider";
 import siteConfig from "@/config/site";
 import Footer from "@/components/footer";
-import SecondaryNav from "@/components/secondary-nav";
 
-/**
- * Metadata object for the Next.js page.
- * @type {Metadata}
- * @see {@link https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function}
- */
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
-  // Icon URLs for various platforms
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
     shortcut: "/favicon-32x32.png",
   },
   description: siteConfig.description,
-  // Keywords relevant to the website's content
   keywords: [
     "Online Shopping",
     "Affiliate Store",
@@ -47,7 +40,6 @@ export const metadata: Metadata = {
     "Convenient Shopping",
     "Buzzxstore",
   ],
-  // Authors and creator information
   authors: [
     {
       name: "Buzzxstore",
@@ -55,9 +47,7 @@ export const metadata: Metadata = {
     },
   ],
   creator: "Buzzxstore",
-  // Theme color options based on user's color scheme preference
   themeColor: [{ media: "(prefers-color-scheme: dark)", color: "black" }],
-  // OpenGraph metadata for social media sharing
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -91,7 +81,6 @@ export default async function RootLayout({
       <body className="bg-neutral-900 text-black selection:bg-teal-300 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white ">
         <RtkProvider>
           <Navbar />
-          <SecondaryNav />
           <Suspense>
             <main className="mb-10 mt-[20vh] flex flex-col items-center justify-between px-5 md:px-20">
               {children}

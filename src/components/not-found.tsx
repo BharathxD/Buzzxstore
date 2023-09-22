@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import type { FC } from "react";
 import { useRouter } from "next/navigation";
@@ -14,10 +14,10 @@ interface EmptyStateProps {
 }
 
 const EmptyState: FC<EmptyStateProps> = ({
-  title = "No products found with the given category",
-  subtitle = "Try changing category",
+  title = "No products were found in the specified category",
+  subtitle = "Please try changing the category",
   showReset,
-  resetLabel = "Reset the category",
+  resetLabel = "Reset Category",
 }) => {
   const router = useRouter();
   return (

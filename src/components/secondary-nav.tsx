@@ -13,7 +13,7 @@ const SecondaryNav = async () => {
   const firstCategorySplit = categories.slice(0, splitIndex);
   const secondCategorySplit = categories.slice(splitIndex);
   return (
-    <div className="no-scrollbar fixed inset-x-0 top-[10vh] z-50 flex h-[7vh] w-full flex-row overflow-x-scroll border-b border-b-neutral-700 bg-neutral-900/90 p-2 backdrop-blur-md">
+    <div className="no-scrollbar flex h-[7vh] w-full flex-row overflow-x-scroll border-b border-b-neutral-700 bg-neutral-900/90 p-2 backdrop-blur-md">
       <div className="flex w-full flex-row items-center gap-4 px-4 md:justify-center">
         <HomeButton />
         {firstCategorySplit?.map(({ id, name }, i) => (

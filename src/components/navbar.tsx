@@ -1,17 +1,14 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 
 import SearchBar from "./search-bar";
+import SecondaryNav from "./secondary-nav";
 
 const Navbar = () => {
   return (
-    <header>
-      <div
-        className={`fixed inset-x-0 top-0 z-50 flex max-h-[10vh] flex-row items-center justify-center border-b border-b-neutral-700 bg-neutral-900 duration-200`}
-      >
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="flex flex-row items-center justify-center border-b border-b-neutral-700 bg-neutral-900 duration-200">
         <div className="container mx-auto flex flex-row-reverse items-center justify-between p-6">
           <div className="inline-flex items-center justify-center gap-3">
             <SearchBar />
@@ -36,6 +33,7 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
+      <SecondaryNav />
     </header>
   );
 };
