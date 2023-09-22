@@ -74,8 +74,8 @@ const SearchBar: React.FC = () => {
                 )}
               {(queryResults?.length ?? 0) > 0 && (
                 <ul className="list-none">
-                  {queryResults?.map((product) => (
-                    <li key={product.id}>
+                  {queryResults?.map((product, i) => (
+                    <li key={`${product.id}_${i}`}>
                       <a
                         className="inline-flex h-fit w-full items-center gap-2 p-5 text-lg text-neutral-50 hover:bg-zinc-800 hover:text-zinc-300"
                         href={`/product/${product.id}`}

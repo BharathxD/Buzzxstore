@@ -37,7 +37,7 @@ const ProductCarousel = async ({
       <ul className="no-scrollbar flex gap-4 overflow-x-auto ">
         {products.map((product, i) => (
           <li
-            key={`${product.id}${i}`}
+            key={`${product.id}_${i}`}
             className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
           >
             <Link

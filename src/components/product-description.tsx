@@ -41,12 +41,12 @@ const ProductDetails = ({ product }: ProductDetails) => {
             <Price amount={product.price} />
           </span>
           <span className="inline-flex gap-2">
-            {product.providers.map(({ id, name, link }) => {
+            {product.providers.map(({ id, name, link }, i) => {
               switch (name) {
                 case "amazon":
                   return (
                     <Link
-                      key={id}
+                      key={`${id}_${i}`}
                       className="inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                       target="_blank"
                       href={link}
