@@ -9,10 +9,9 @@ datasource db {
 
 model Category {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
+  name     String    @unique
+  slug     String?    
   products Product[]
-
-  @@index([name])
 }
 
 model Product {
@@ -20,19 +19,27 @@ model Product {
   name        String
   description String
   image       String
-  price       String
+  slug        String?
 
-  providers  Provider[]
-  Category   Category?  @relation(fields: [categoryId], references: [id])
-  categoryId String?    @db.ObjectId
+  providers   Provider[]
+  category    Category?  @relation(fields: [category_id], references: [id])
+  category_id String?    @db.ObjectId
 
   @@index([name])
 }
 
 model Provider {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  link      String
-  Product   Product? @relation(fields: [productId], references: [id])
-  productId String?  @db.ObjectId
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  name       ProviderType
+  link       String
+  price      String
+  mrp        String
+  off        String
+  product    Product      @relation(fields: [product_id], references: [id])
+  product_id String       @db.ObjectId
+}
+
+enum ProviderType {
+  Amazon
+  Flipkart
 }

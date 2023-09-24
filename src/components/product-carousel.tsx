@@ -48,7 +48,9 @@ const ProductCarousel = async ({
                 alt={product.name}
                 label={{
                   title: product.name,
-                  amount: product.price,
+                  amount: product.providers
+                    .map(({ price }) => +price.replace(/,/g, ""))
+                    .sort((a, b) => b - a)[0],
                   currencyCode: "INR",
                 }}
                 src={product.image}

@@ -1,4 +1,4 @@
-import type { Product } from "@prisma/client";
+import type { Category, Product, Provider } from "@prisma/client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -11,9 +11,13 @@ const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
     ? stringToCheck
     : `${startsWith}${stringToCheck}`;
 
-const comparePrices = (a: Product, b: Product) => {
-  const priceA = parseFloat(a.price.replace(/,/g, ""));
-  const priceB = parseFloat(b.price.replace(/,/g, ""));
+const comparePrices = (a: (Product & { category: Category | null; providers: Provider[] }), b: (Product & { category: Category | null; providers: Provider[] })) => {
+  const priceA = a.providers
+    .map(({ price }) => +price.replace(/,/g, ""))
+    .sort((a, b) => b - a)[0];
+  const priceB = b.providers
+    .map(({ price }) => +price.replace(/,/g, ""))
+    .sort((a, b) => b - a)[0];
 
   if (priceA < priceB) return -1;
   else if (priceA > priceB) return 1;

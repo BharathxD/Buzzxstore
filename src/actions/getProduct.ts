@@ -18,7 +18,7 @@ async function getProduct({
       },
       include: {
         providers: true,
-        Category: true,
+        category: true,
       },
     });
     return products ?? null;

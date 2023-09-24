@@ -4,7 +4,7 @@ const Price = ({
   amount,
   className,
 }: {
-  amount: string;
+  amount: number;
   className?: string;
 } & React.ComponentProps<"p">) => (
   <p suppressHydrationWarning={true} className={className}>

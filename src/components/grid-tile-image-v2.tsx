@@ -13,7 +13,7 @@ const GridTileImageV2 = ({
   active?: boolean;
   label?: {
     title: string;
-    amount: string;
+    amount: number;
     currencyCode: string;
     position?: "bottom" | "center";
   };

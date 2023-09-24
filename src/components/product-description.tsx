@@ -38,12 +38,18 @@ const ProductDetails = ({ product }: ProductDetails) => {
           )}
         >
           <span className="text-2xl md:text-3xl">
-            <Price amount={product.price} />
+            <Price
+              amount={
+                product.providers
+                  .map(({ price }) => +price.replace(/,/g, ""))
+                  .sort((a, b) => b - a)[0]
+              }
+            />
           </span>
           <span className="inline-flex gap-2">
             {product.providers.map(({ id, name, link }, i) => {
               switch (name) {
-                case "amazon":
+                case "Amazon":
                   return (
                     <Link
                       key={`${id}_${i}`}
@@ -55,7 +61,7 @@ const ProductDetails = ({ product }: ProductDetails) => {
                       <span className="text-base font-semibold">Amazon</span>
                     </Link>
                   );
-                case "flipkart":
+                case "Flipkart":
                   return (
                     <Link
                       key={`${id}_${i}`}

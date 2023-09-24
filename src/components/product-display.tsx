@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { type ModifiedProducts } from "@/actions/getProducts";
-import { type Category, type Product } from "@prisma/client";
+import type { Category, Product, Provider } from "@prisma/client";
 import { Filter } from "lucide-react";
 
 import { cn, comparePrices } from "@/lib/utils";
@@ -15,7 +15,9 @@ import Label from "./ui/label";
 import { Select, SelectContent, SelectTrigger } from "./ui/select";
 
 interface ProductDisplayProps {
-  products: ModifiedProducts | (Product & { Category: Category | null })[];
+  products:
+    | ModifiedProducts
+    | (Product & { category: Category | null; providers: Provider[] })[];
   isHomepage?: boolean;
 }
 
@@ -48,7 +50,7 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
 
   const categoryTitle = isHomepage
     ? "All products"
-    : products[0]?.Category?.name ?? "";
+    : products[0]?.category?.name ?? "";
 
   return (
     <section className="flex w-full flex-col items-center justify-center gap-4">
@@ -120,27 +122,32 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
         </Select>
       </header>
       <ul className="grid w-full gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-        {sortedProducts.map((product, i) => (
-          <li key={`${product.id}_${i}`} className="relative h-full w-full">
-            <Link
-              href={`/product/${product.id}`}
-              className="relative h-full w-full"
-            >
-              <GridTileImage
-                alt={product.name}
-                label={{
-                  title: product.name,
-                  amount: product.price,
-                  currencyCode: "INR",
-                }}
-                src={product.image}
-                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-                fill
-              />
-              <Label title={product.name} amount={product.price} />
-            </Link>
-          </li>
-        ))}
+        {sortedProducts.map((product, i) => {
+          const amount = product.providers
+            .map(({ price }) => +price.replace(/,/g, ""))
+            .sort((a, b) => b - a)[0];
+          return (
+            <li key={`${product.id}_${i}`} className="relative h-full w-full">
+              <Link
+                href={`/product/${product.id}`}
+                className="relative h-full w-full"
+              >
+                <GridTileImage
+                  alt={product.name}
+                  label={{
+                    title: product.name,
+                    amount,
+                    currencyCode: "INR",
+                  }}
+                  src={product.image}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                  fill
+                />
+                <Label title={product.name} amount={amount} />
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

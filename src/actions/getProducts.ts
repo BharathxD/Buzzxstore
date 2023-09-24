@@ -6,7 +6,7 @@ import database from "@/lib/database";
 
 export type ModifiedProducts = ({
   providers: Provider[];
-  Category: Category | null;
+  category: Category | null;
 } & Product)[];
 
 async function getProducts({
@@ -17,13 +17,13 @@ async function getProducts({
   try {
     const products = await database.product.findMany({
       where: {
-        Category: {
+        category: {
           id: categoryId,
         },
       },
       include: {
         providers: true,
-        Category: true,
+        category: true,
       },
     });
     return products ?? null;
