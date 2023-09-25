@@ -6,6 +6,13 @@ const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
+/**
+ * Ensure that a string starts with a specified substring.
+ *
+ * @param {string} stringToCheck - The string to check.
+ * @param {string} startsWith - The substring to ensure the string starts with.
+ * @returns {string} - The modified string.
+ */
 const ensureStartsWith = (stringToCheck: string, startsWith: string) =>
   stringToCheck.startsWith(startsWith)
     ? stringToCheck
