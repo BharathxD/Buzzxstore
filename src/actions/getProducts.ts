@@ -1,10 +1,3 @@
-/**
- * Retrieves a list of products based on the provided category ID.
- *
- * @param {Object} params - Parameters for retrieving products.
- * @param {string} params.categoryId - The ID of the category to filter products.
- * @returns {Promise<ModifiedProducts | null>} - A promise that resolves to an array of modified products or null if an error occurs.
- */
 "use server";
 
 import { type Category, type Product, type Provider } from "@prisma/client";

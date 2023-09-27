@@ -1,8 +1,3 @@
-/**
- * Retrieves a list of categories.
- *
- * @returns {Promise<Category[] | null>} - A promise that resolves to an array of categories or null if an error occurs.
- */
 "use server";
 
 import { type Category } from "@prisma/client";
