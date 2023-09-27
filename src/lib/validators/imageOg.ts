@@ -1,14 +1,3 @@
-/**
- * Zod is a TypeScript-first schema validation library that helps define
- * and validate data schemas. It ensures that the data conforms to the specified
- * schema before processing it further.
- *
- * This code defines a validator schema and a payload type for handling Open Graph
- * image parameters in a NextJS application.
- *
- * @see https://github.com/colinhacks/zod
- */
-
 import { object, string } from "zod";
 import type { infer as zodInfer } from "zod";
 

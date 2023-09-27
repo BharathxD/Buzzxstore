@@ -16,8 +16,8 @@ interface EmptyStateProps {
 const EmptyState: FC<EmptyStateProps> = ({
   title = "No products were found in the specified category",
   subtitle = "Please try changing the category",
-  showReset,
   resetLabel = "Reset Category",
+  showReset = false,
 }) => {
   const router = useRouter();
   return (
