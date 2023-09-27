@@ -6,7 +6,7 @@ import { string, ZodError } from "zod";
 import database from "@/lib/database";
 
 /**
- * Retrieves posts based on the provided query parameter.
+ * Retrieves products based on the provided query parameter.
  * @param req - The NextRequest object containing the request details.
  * @returns A NextResponse object containing the search results.
  */
