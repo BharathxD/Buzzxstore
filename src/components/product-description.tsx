@@ -31,10 +31,10 @@ const ProductDetails = ({ product }: ProductDetails) => {
         </h1>
         <div
           className={cn(
-            "mr-auto flex w-full items-center justify-between gap-5 rounded-full text-white",
+            "mr-auto flex w-full items-center justify-between gap-5 rounded-full text-white md:flex-row",
             product.providers.length > 1
-              ? "flex-col md:flex-row"
-              : "flex-row md:flex-row"
+              ? "flex-col"
+              : "flex-row"
           )}
         >
           <span className="text-2xl md:text-3xl">
