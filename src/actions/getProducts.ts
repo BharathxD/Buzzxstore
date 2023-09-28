@@ -16,11 +16,11 @@ export type ModifiedProducts = ({
  * @param {string} params.categoryId - The ID of the category to filter products.
  * @returns {Promise<ModifiedProducts | null>} - A promise that resolves to an array of modified products or null if an error occurs.
  */
-async function getProducts({
+const getProducts = async ({
   categoryId,
 }: {
   categoryId: string;
-}): Promise<ModifiedProducts | null> {
+}): Promise<ModifiedProducts | null> => {
   try {
     const products = await database.product.findMany({
       where: {
