@@ -9,7 +9,7 @@ import { useQuery } from "react-query";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-const SearchBar: React.FC = () => {
+const SearchBar = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const {
     data: queryResults,
