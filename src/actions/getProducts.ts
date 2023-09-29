@@ -34,7 +34,7 @@ const getProducts = async ({
       },
     });
     return products ?? null;
-  } catch (error) {
+  } catch (error: unknown) {
     return null;
   }
 }
