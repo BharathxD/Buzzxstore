@@ -12,7 +12,7 @@ async function getAllProducts(): Promise<ModifiedProducts | null> {
       include: { category: true, providers: true },
     });
     return products ?? null;
-  } catch (error) {
+  } catch (error: unknown) {
     return null;
   }
 }
