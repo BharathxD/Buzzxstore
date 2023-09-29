@@ -38,6 +38,7 @@ const generateMetadata = async ({
 
   const ogUrl = new URL(`${siteUrl}/api/og`);
   ogUrl.searchParams.set("title", product.name);
+  const productOg = ogUrl.toString();
 
   const metadata = {
     title: productName,
@@ -51,7 +52,7 @@ const generateMetadata = async ({
       url: `${siteConfig.url}/product/${product.id}`,
       images: [
         {
-          url: ogUrl.toString(),
+          url: productOg,
           width: 800,
           height: 400,
           alt: productName,
@@ -62,7 +63,7 @@ const generateMetadata = async ({
       card: "summary_large_image",
       title: productName,
       description: productDescription,
-      images: [ogUrl.toString()],
+      images: [productOg],
     },
   };
 
