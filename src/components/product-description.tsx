@@ -1,82 +1,68 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import Link from "next/link";
-import type { Product, Provider } from "@prisma/client";
 import { FaAmazon } from "react-icons/fa";
 import { SiFlipkart } from "react-icons/si";
 
 import { cn } from "@/lib/utils";
-
 import Price from "./ui/price";
 
-interface ProductDetails {
-  product: { providers: Provider[] } & Product;
+import type { Product, Provider } from "@prisma/client";
+
+interface ProductDetailsProps {
+  product: Product & { providers: Provider[] };
 }
 
-const ProductDetails = ({ product }: ProductDetails) => {
-  const maxLength = 80;
+const truncateText = (text: string, maxLength: number): string => {
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};
+
+const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
+  const maxDisplayLength = 80;
   const maxDescriptionLength = 500;
-  const displayText =
-    product.name.length > maxLength
-      ? product.name.substring(0, maxLength) + "..."
-      : product.name;
-  const displayDescription =
-    product.description.length > maxDescriptionLength
-      ? product.description.substring(0, maxDescriptionLength) + "..."
-      : product.description;
+  const displayText = truncateText(product.name, maxDisplayLength);
+  const displayDescription = truncateText(product.description, maxDescriptionLength);
+
+  const renderProviderLink = (provider: Provider, index: number) => {
+    const { id, name, link } = provider;
+    const isAmazon = name === "Amazon";
+    const IconComponent = isAmazon ? FaAmazon : SiFlipkart;
+
+    return (
+      <Link
+        key={`${id}_${index}`}
+        className={cn(
+          "inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          { "flex-col": product.providers.length > 1, "flex-row": product.providers.length <= 1 }
+        )}
+        target="_blank"
+        href={link}
+      >
+        <IconComponent size={20} />
+        <span className="text-base font-semibold">{name}</span>
+      </Link>
+    );
+  };
+
   return (
     <Fragment>
       <div className="mb-6 flex flex-col gap-4 border-b border-neutral-700 pb-6 pt-3">
         <h1 className="bg-gradient-to-br from-zinc-200 to-zinc-400 bg-clip-text text-[25px] font-extrabold leading-tight tracking-tighter text-transparent md:text-[48px]">
           {displayText}
         </h1>
-        <div
-          className={cn(
-            "mr-auto flex w-full items-center justify-between gap-5 rounded-full text-white md:flex-row",
-            product.providers.length > 1
-              ? "flex-col"
-              : "flex-row"
-          )}
-        >
+        <div className="mr-auto flex w-full items-center justify-between gap-5 rounded-full text-white md:flex-row">
           <span className="text-2xl md:text-3xl">
             <Price
               amount={
-                product.providers
-                  .map(({ price }) => +price.replace(/,/g, ""))
-                  .sort((a, b) => b - a)[0]
+                Math.max(
+                  ...product.providers.map(({ price }) =>
+                    parseFloat(price.replace(/,/g, ""))
+                  )
+                )
               }
             />
           </span>
           <span className="inline-flex gap-2">
-            {product.providers.map(({ id, name, link }, i) => {
-              switch (name) {
-                case "Amazon":
-                  return (
-                    <Link
-                      key={`${id}_${i}`}
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-                      target="_blank"
-                      href={link}
-                    >
-                      <FaAmazon size={20} />
-                      <span className="text-base font-semibold">Amazon</span>
-                    </Link>
-                  );
-                case "Flipkart":
-                  return (
-                    <Link
-                      key={`${id}_${i}`}
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-                      target="_blank"
-                      href={link}
-                    >
-                      <SiFlipkart size={20} />
-                      <span className="text-base font-semibold">Flipkart</span>
-                    </Link>
-                  );
-                default:
-                  return null;
-              }
-            })}
+            {product.providers.map(renderProviderLink)}
           </span>
         </div>
       </div>
