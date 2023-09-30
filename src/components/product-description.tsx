@@ -15,9 +15,8 @@ interface ProductDetailsProps {
 const MAX_DISPLAY_LENGTH = 80;
 const MAX_DESCRIPTION_LENGTH = 500;
 
-const truncateText = (text: string, maxLength: number): string => {
-  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-};
+const truncateText = (text: string, maxLength: number): string =>
+  text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const displayText = truncateText(product.name, MAX_DISPLAY_LENGTH);
