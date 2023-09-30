@@ -1,26 +1,30 @@
 import React, { Fragment } from "react";
 import Link from "next/link";
+import type { Product, Provider } from "@prisma/client";
 import { FaAmazon } from "react-icons/fa";
 import { SiFlipkart } from "react-icons/si";
 
 import { cn } from "@/lib/utils";
-import Price from "./ui/price";
 
-import type { Product, Provider } from "@prisma/client";
+import Price from "./ui/price";
 
 interface ProductDetailsProps {
   product: Product & { providers: Provider[] };
 }
+
+const MAX_DISPLAY_LENGTH = 80;
+const MAX_DESCRIPTION_LENGTH = 500;
 
 const truncateText = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 };
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
-  const maxDisplayLength = 80;
-  const maxDescriptionLength = 500;
-  const displayText = truncateText(product.name, maxDisplayLength);
-  const displayDescription = truncateText(product.description, maxDescriptionLength);
+  const displayText = truncateText(product.name, MAX_DISPLAY_LENGTH);
+  const displayDescription = truncateText(
+    product.description,
+    MAX_DESCRIPTION_LENGTH
+  );
 
   const renderProviderLink = (provider: Provider, index: number) => {
     const { id, name, link } = provider;
@@ -32,7 +36,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         key={`${id}_${index}`}
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-          { "flex-col": product.providers.length > 1, "flex-row": product.providers.length <= 1 }
+          {
+            "flex-col": product.providers.length > 1,
+            "flex-row": product.providers.length <= 1,
+          }
         )}
         target="_blank"
         href={link}
@@ -52,13 +59,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <div className="mr-auto flex w-full items-center justify-between gap-5 rounded-full text-white md:flex-row">
           <span className="text-2xl md:text-3xl">
             <Price
-              amount={
-                Math.max(
-                  ...product.providers.map(({ price }) =>
-                    parseFloat(price.replace(/,/g, ""))
-                  )
+              amount={Math.max(
+                ...product.providers.map(({ price }) =>
+                  parseFloat(price.replace(/,/g, ""))
                 )
-              }
+              )}
             />
           </span>
           <span className="inline-flex gap-2">
