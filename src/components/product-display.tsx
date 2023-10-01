@@ -7,7 +7,6 @@ import type { Category, Product, Provider } from "@prisma/client";
 import { Filter } from "lucide-react";
 
 import { cn, comparePrices } from "@/lib/utils";
-import useOnClickOutside from "@/hooks/useClickOutside";
 
 import { GridTileImage } from "./grid-tile-image";
 import { Button } from "./ui/button";
@@ -34,7 +33,6 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Ascending);
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
-  useOnClickOutside(selectRef, () => setOpen(false));
 
   if (!products?.length) return null;
 
