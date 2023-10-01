@@ -71,6 +71,7 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
             aria-label="Open Sort Options"
           >
             <Filter className="ml-auto md:ml-2" />
+            <span className="hidden md:block">Filter</span>
           </SelectTrigger>
           <SelectContent
             sideOffset={5}
