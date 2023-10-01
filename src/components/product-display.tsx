@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { type ModifiedProducts } from "@/actions/getProducts";
 import type { Category, Product, Provider } from "@prisma/client";
 import { Filter } from "lucide-react";
 
 import { cn, comparePrices } from "@/lib/utils";
+import useOnClickOutside from "@/hooks/use-on-click-outside";
 
 import { GridTileImage } from "./grid-tile-image";
 import { Button } from "./ui/button";
@@ -28,29 +29,30 @@ enum SORT_ORDER {
   Descending = "desc",
   None = "none",
 }
+
 const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
   const [sortOrder, setSortOrder] = useState<SORT_ORDER>(SORT_ORDER.Ascending);
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(selectRef, () => setOpen(false));
 
-  if (!products?.length) return null;
+  const categoryTitle = useMemo(() => {
+    if (isHomepage) return "All products";
+    return products[0]?.category?.name ?? "";
+  }, [isHomepage, products]);
 
-  const sortOptions = [
-    { label: "Low to High", value: SORT_ORDER.Ascending },
-    { label: "High to Low", value: SORT_ORDER.Descending },
-    { label: "None", value: SORT_ORDER.None },
-  ];
+  const sortedProducts = useMemo(() => {
+    if (!products?.length) return [];
 
-  const categoryTitle = isHomepage
-    ? "All products"
-    : products[0]?.category?.name ?? "";
+    const sorted = [...products];
 
-  const handleSortChange = (value: SORT_ORDER) => {
-    setSortOrder(value);
-    setOpen(false);
-  };
+    if (sortOrder === SORT_ORDER.Ascending) 
+      return sorted.sort(comparePrices);
+    else if (sortOrder === SORT_ORDER.Descending)
+      return sorted.sort((a, b) => comparePrices(b, a));
 
-  const sortedProducts = [...products].sort(comparePrices);
+    return sorted;
+  }, [products, sortOrder]);
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-4">
@@ -59,12 +61,12 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
           {categoryTitle}
         </h1>
         <Select
-          onValueChange={handleSortChange}
+          onValueChange={(value: SORT_ORDER) => setSortOrder(value)}
           defaultValue={SORT_ORDER.None}
           open={open}
         >
           <SelectTrigger
-            className="inline-flex w-min items-center gap-2 rounded-full border-neutral-700 bg-neutral-800 text-neutral-300"
+            className="inline-flex w-min gap-2 rounded-full border-neutral-700 bg-neutral-800 text-neutral-300"
             onClick={() => setOpen(true)}
             aria-label="Open Sort Options"
           >
@@ -78,30 +80,54 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
             ref={selectRef}
           >
             <div className="flex flex-col gap-1">
-              {sortOptions.map((option) => (
-                <Button
-                  key={option.value}
-                  variant="ghost"
-                  onClick={() => handleSortChange(option.value)}
-                  className={cn(
-                    sortOrder === option.value &&
-                      "bg-neutral-50 text-neutral-900"
-                  )}
-                >
-                  {option.label}
-                </Button>
-              ))}
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setSortOrder(SORT_ORDER.Ascending);
+                  setOpen(false);
+                }}
+                className={cn(
+                  sortOrder === SORT_ORDER.Ascending &&
+                    "bg-neutral-50 text-neutral-900"
+                )}
+              >
+                Low to High
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setSortOrder(SORT_ORDER.Descending);
+                  setOpen(false);
+                }}
+                className={cn(
+                  sortOrder === SORT_ORDER.Descending &&
+                    "bg-neutral-50 text-neutral-900"
+                )}
+              >
+                High to Low
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setSortOrder(SORT_ORDER.None);
+                  setOpen(false);
+                }}
+                className={cn(
+                  sortOrder === SORT_ORDER.None &&
+                    "bg-neutral-50 text-neutral-900"
+                )}
+              >
+                None
+              </Button>
             </div>
           </SelectContent>
         </Select>
       </header>
       <ul className="grid w-full gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {sortedProducts.map((product, i) => {
-          const amount = Math.max(
-            ...product.providers.map(
-              (provider) => +provider.price.replace(/,/g, "")
-            )
-          );
+          const amount = product.providers
+            .map(({ price }) => +price.replace(/,/g, ""))
+            .sort((a, b) => b - a)[0];
           return (
             <li key={`${product.id}_${i}`} className="relative h-full w-full">
               <Link
