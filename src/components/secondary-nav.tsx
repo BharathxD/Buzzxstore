@@ -18,7 +18,7 @@ const SecondaryNav = async () => {
       <div className="flex w-full flex-row items-center gap-4 px-4 md:justify-center">
         <HomeButton />
         {firstCategorySplit?.map(({ id, name }) => (
-          <NavItem id={id} name={name} />
+          <NavItem key={id} id={id} name={name} />
         ))}
         <OtherCategories categories={secondCategorySplit} />
       </div>
