@@ -28,7 +28,6 @@ enum SORT_ORDER {
   Descending = "desc",
   None = "none",
 }
-
 const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
   const [sortOrder, setSortOrder] = useState<SORT_ORDER>(SORT_ORDER.Ascending);
   const [open, setOpen] = useState(false);
@@ -36,31 +35,36 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
 
   if (!products?.length) return null;
 
-  let sortedProducts = [...products];
-
-  if (sortOrder === SORT_ORDER.Ascending) {
-    sortedProducts = sortedProducts.sort(comparePrices);
-  } else if (sortOrder === SORT_ORDER.Descending) {
-    sortedProducts = sortedProducts.sort((a, b) => comparePrices(b, a));
-  }
+  const sortOptions = [
+    { label: "Low to High", value: SORT_ORDER.Ascending },
+    { label: "High to Low", value: SORT_ORDER.Descending },
+    { label: "None", value: SORT_ORDER.None },
+  ];
 
   const categoryTitle = isHomepage
     ? "All products"
     : products[0]?.category?.name ?? "";
 
+  const handleSortChange = (value: SORT_ORDER) => {
+    setSortOrder(value);
+    setOpen(false);
+  };
+
+  const sortedProducts = [...products].sort(comparePrices);
+
   return (
-    <section className="flex w-full flex-col items-center justify-center gap-4">
+    <div className="flex w-full flex-col items-center justify-center gap-4">
       <header className="flex w-full items-center justify-between">
         <h1 className="truncate bg-gradient-to-br from-zinc-200 to-zinc-400 bg-clip-text text-3xl font-extrabold capitalize leading-tight tracking-tighter text-transparent">
           {categoryTitle}
         </h1>
         <Select
-          onValueChange={(value: SORT_ORDER) => setSortOrder(value)}
+          onValueChange={handleSortChange}
           defaultValue={SORT_ORDER.None}
           open={open}
         >
           <SelectTrigger
-            className="inline-flex w-min gap-2 rounded-full border-neutral-700 bg-neutral-800 text-neutral-300"
+            className="inline-flex w-min items-center gap-2 rounded-full border-neutral-700 bg-neutral-800 text-neutral-300"
             onClick={() => setOpen(true)}
             aria-label="Open Sort Options"
           >
@@ -74,54 +78,30 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
             ref={selectRef}
           >
             <div className="flex flex-col gap-1">
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  setSortOrder(SORT_ORDER.Ascending);
-                  setOpen(false);
-                }}
-                className={cn(
-                  sortOrder === SORT_ORDER.Ascending &&
-                    "bg-neutral-50 text-neutral-900"
-                )}
-              >
-                Low to High
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  setSortOrder(SORT_ORDER.Descending);
-                  setOpen(false);
-                }}
-                className={cn(
-                  sortOrder === SORT_ORDER.Descending &&
-                    "bg-neutral-50 text-neutral-900"
-                )}
-              >
-                High to Low
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  setSortOrder(SORT_ORDER.None);
-                  setOpen(false);
-                }}
-                className={cn(
-                  sortOrder === SORT_ORDER.None &&
-                    "bg-neutral-50 text-neutral-900"
-                )}
-              >
-                None
-              </Button>
+              {sortOptions.map((option) => (
+                <Button
+                  key={option.value}
+                  variant="ghost"
+                  onClick={() => handleSortChange(option.value)}
+                  className={cn(
+                    sortOrder === option.value &&
+                      "bg-neutral-50 text-neutral-900"
+                  )}
+                >
+                  {option.label}
+                </Button>
+              ))}
             </div>
           </SelectContent>
         </Select>
       </header>
       <ul className="grid w-full gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {sortedProducts.map((product, i) => {
-          const amount = product.providers
-            .map(({ price }) => +price.replace(/,/g, ""))
-            .sort((a, b) => b - a)[0];
+          const amount = Math.max(
+            ...product.providers.map(
+              (provider) => +provider.price.replace(/,/g, "")
+            )
+          );
           return (
             <li key={`${product.id}_${i}`} className="relative h-full w-full">
               <Link
@@ -145,7 +125,7 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
           );
         })}
       </ul>
-    </section>
+    </div>
   );
 };
 
