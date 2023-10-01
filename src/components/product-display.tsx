@@ -23,26 +23,24 @@ interface ProductDisplayProps {
 /**
  * Enum for sorting order options.
  */
-enum SortOrder {
+enum SORT_ORDER {
   Ascending = "asc",
   Descending = "desc",
   None = "none",
 }
 
 const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Ascending);
+  const [sortOrder, setSortOrder] = useState<SORT_ORDER>(SORT_ORDER.Ascending);
   const [open, setOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
 
   if (!products?.length) return null;
 
-  // Create a copy of the products array to avoid mutating the original data
   let sortedProducts = [...products];
 
-  // Sort the products based on the user's selection
-  if (sortOrder === SortOrder.Ascending) {
+  if (sortOrder === SORT_ORDER.Ascending) {
     sortedProducts = sortedProducts.sort(comparePrices);
-  } else if (sortOrder === SortOrder.Descending) {
+  } else if (sortOrder === SORT_ORDER.Descending) {
     sortedProducts = sortedProducts.sort((a, b) => comparePrices(b, a));
   }
 
@@ -57,8 +55,8 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
           {categoryTitle}
         </h1>
         <Select
-          onValueChange={(value: SortOrder) => setSortOrder(value)}
-          defaultValue={SortOrder.None}
+          onValueChange={(value: SORT_ORDER) => setSortOrder(value)}
+          defaultValue={SORT_ORDER.None}
           open={open}
         >
           <SelectTrigger
@@ -79,11 +77,11 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
               <Button
                 variant="ghost"
                 onClick={() => {
-                  setSortOrder(SortOrder.Ascending);
+                  setSortOrder(SORT_ORDER.Ascending);
                   setOpen(false);
                 }}
                 className={cn(
-                  sortOrder === SortOrder.Ascending &&
+                  sortOrder === SORT_ORDER.Ascending &&
                     "bg-neutral-50 text-neutral-900"
                 )}
               >
@@ -92,11 +90,11 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
               <Button
                 variant="ghost"
                 onClick={() => {
-                  setSortOrder(SortOrder.Descending);
+                  setSortOrder(SORT_ORDER.Descending);
                   setOpen(false);
                 }}
                 className={cn(
-                  sortOrder === SortOrder.Descending &&
+                  sortOrder === SORT_ORDER.Descending &&
                     "bg-neutral-50 text-neutral-900"
                 )}
               >
@@ -105,11 +103,11 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
               <Button
                 variant="ghost"
                 onClick={() => {
-                  setSortOrder(SortOrder.None);
+                  setSortOrder(SORT_ORDER.None);
                   setOpen(false);
                 }}
                 className={cn(
-                  sortOrder === SortOrder.None &&
+                  sortOrder === SORT_ORDER.None &&
                     "bg-neutral-50 text-neutral-900"
                 )}
               >
