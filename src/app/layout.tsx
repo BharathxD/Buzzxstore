@@ -24,22 +24,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon-32x32.png",
   },
   description: siteConfig.description,
-  keywords: [
-    "Online Shopping",
-    "Affiliate Store",
-    "Retailer Products",
-    "One-Stop Shopping",
-    "Online Retailers",
-    "Shopping Destination",
-    "Product Variety",
-    "Top Brands",
-    "Best selling smartphone",
-    "Best phones",
-    "Best mobiles",
-    "Best smartphones",
-    "Convenient Shopping",
-    "Buzzxstore",
-  ],
+  keywords: siteConfig.keywords,
   authors: [
     {
       name: "Buzzxstore",
