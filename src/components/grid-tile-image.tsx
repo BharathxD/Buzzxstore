@@ -11,7 +11,7 @@ export function GridTileImage({
   active?: boolean;
   label?: {
     title: string;
-    amount: number;
+    off: number;
     currencyCode: string;
     position?: "bottom" | "center";
   };
@@ -27,6 +27,9 @@ export function GridTileImage({
         }
       )}
     >
+      <span className=" absolute right-2 top-2 z-10 rounded-md bg-red-500 p-2 text-white">
+        {label?.off}%
+      </span>
       {props.src ? (
         // eslint-disable-next-line jsx-a11y/alt-text -- `alt` is inherited from `props`, which is being enforced with TypeScript
         <Image

@@ -34,10 +34,10 @@ const Price = ({
       </span>
     </div>
   ) : (
-    <span className={clsx("inline")}>
-      &#x20B9;
-      {amount}
-    </span>
+    <p suppressHydrationWarning={true} className={className}>
+      <span className={clsx("ml-1 inline")}>&#x20B9;</span>
+      <span>{amount}</span>
+    </p>
   );
 
 export default Price;

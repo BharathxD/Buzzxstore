@@ -46,8 +46,7 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
 
     const sorted = [...products];
 
-    if (sortOrder === SORT_ORDER.Ascending) 
-      return sorted.sort(comparePrices);
+    if (sortOrder === SORT_ORDER.Ascending) return sorted.sort(comparePrices);
     else if (sortOrder === SORT_ORDER.Descending)
       return sorted.sort((a, b) => comparePrices(b, a));
 
@@ -138,7 +137,7 @@ const ProductDisplay = ({ products, isHomepage }: ProductDisplayProps) => {
                   alt={product.name}
                   label={{
                     title: product.name,
-                    amount,
+                    off: Math.max(...product.providers.map(({ off }) => +off)),
                     currencyCode: "INR",
                   }}
                   src={product.image}
